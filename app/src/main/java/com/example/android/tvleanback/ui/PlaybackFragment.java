@@ -41,6 +41,9 @@ import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
 import android.support.v4.app.ActivityOptionsCompat;
 
+import com.bitmovin.analytics.BitmovinAnalytics;
+import com.bitmovin.analytics.BitmovinAnalyticsConfig;
+import com.bitmovin.analytics.exoplayer.ExoPlayerCollector;
 import com.example.android.tvleanback.R;
 import com.example.android.tvleanback.data.VideoContract;
 import com.example.android.tvleanback.model.Playlist;
@@ -83,6 +86,9 @@ public class PlaybackFragment extends VideoFragment {
     private Playlist mPlaylist;
     private VideoLoaderCallbacks mVideoLoaderCallbacks;
     private CursorObjectAdapter mVideoCursorAdapter;
+
+    private BitmovinAnalyticsConfig mBitmovinAnalyticsConfig;
+    private ExoPlayerCollector mBitmovinAnalytics;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -153,6 +159,9 @@ public class PlaybackFragment extends VideoFragment {
         mPlayerGlue.setHost(new VideoFragmentGlueHost(this));
         mPlayerGlue.playWhenPrepared();
 
+        mBitmovinAnalyticsConfig = new BitmovinAnalyticsConfig("<BITMOVIN API KEY>", getActivity().getApplicationContext());
+        mBitmovinAnalytics = new ExoPlayerCollector(mBitmovinAnalyticsConfig);
+
         play(mVideo);
 
         ArrayObjectAdapter mRowsAdapter = initializeRelatedVideosRow();
@@ -174,6 +183,13 @@ public class PlaybackFragment extends VideoFragment {
         mPlayerGlue.setTitle(video.title);
         mPlayerGlue.setSubtitle(video.description);
         prepareMediaForPlaying(Uri.parse(video.videoUrl));
+
+        mBitmovinAnalytics.detachPlayer();
+        mBitmovinAnalyticsConfig.setVideoId(String.valueOf(video.id));
+        mBitmovinAnalyticsConfig.setTitle(video.title);
+        mBitmovinAnalyticsConfig.setPath(video.videoUrl);
+        mBitmovinAnalyticsConfig.setExperimentName("AndroidTV + ExoPlayer + Bitmovin");
+        mBitmovinAnalytics.attachPlayer(mPlayer);
         mPlayerGlue.play();
     }
 

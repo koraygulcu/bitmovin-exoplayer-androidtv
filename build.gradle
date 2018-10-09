@@ -18,5 +18,9 @@ allprojects {
         mavenCentral()
         jcenter()
         google()
+
+        maven {
+            url  'http://bitmovin.bintray.com/maven'
+        }
     }
 }
