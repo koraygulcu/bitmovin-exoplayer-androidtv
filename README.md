@@ -3,6 +3,7 @@
 [![Join the chat at https://gitter.im/googlesamples/androidtv-Leanback](https://badges.gitter.im/googlesamples/androidtv-Leanback.svg)](https://gitter.im/googlesamples/androidtv-Leanback?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 This sample is a Videos By Google app, designed to run on an Android TV device (such as the Nexus Player), which demonstrates how to use the Leanback Support library which enables you to easily develop beautiful Android TV apps with a user-friendly UI that complies with the UX guidelines of Android TV.
+It also illustrates how to use Bitmovin Analytics collector with ExoPlayer on AndroidTV platform.
 
 
 ## Getting Started
@@ -14,6 +15,8 @@ git clone https://github.com/googlesamples/androidtv-Leanback.git
 ```
 
 - Open the project in [Android Studio][studio].
+- Whitelist package name in your Bitmovin account.
+- Replace your BItmovin Analytics API KEY with the placeholder in PlaybackFragment::initializePlayer()
 - Compile and deploy to your Android TV device (such as a Nexus Player).
 
 Need more information about getting started with Android TV? Check the [official docs][getting-started].
